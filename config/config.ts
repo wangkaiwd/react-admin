@@ -1,6 +1,7 @@
 import { IConfig, IPlugin } from 'umi-types';
-
 import defaultSettings from './defaultSettings';
+
+const pkg = require('../package.json');
 // https://umijs.org/config/
 import slash from 'slash2';
 import webpackPlugin from './plugin.config';
@@ -36,18 +37,18 @@ const plugins: IPlugin[] = [
       },
       pwa: pwa
         ? {
-            workboxPluginMode: 'InjectManifest',
-            workboxOptions: {
-              importWorkboxFrom: 'local',
-            },
-          }
+          workboxPluginMode: 'InjectManifest',
+          workboxOptions: {
+            importWorkboxFrom: 'local',
+          },
+        }
         : false,
       // default close dll, because issue https://github.com/ant-design/ant-design-pro/issues/4665
       // dll features https://webpack.js.org/plugins/dll-plugin/
-      // dll: {
-      //   include: ['dva', 'dva/router', 'dva/saga', 'dva/fetch'],
-      //   exclude: ['@babel/runtime', 'netlify-lambda'],
-      // },
+      dll: {
+        include: Object.keys(pkg.dependencies),
+        exclude: ['@babel/runtime', 'netlify-lambda'],
+      },
     },
   ],
   [
@@ -79,14 +80,15 @@ if (isAntDesignProPreview) {
 
 export default {
   plugins,
-  block: {
+  block: { // 物料
     defaultGitUrl: 'https://github.com/ant-design/pro-blocks',
   },
-  hash: true,
-  targets: {
-    ie: 11,
+  hash: true, // 是否开启hash文件后缀
+  targets: { // 配置浏览器最低版本，会自动引入polyfill和做语法转换，配置的targets会合并到默认值，所以不需要重复配置
+    ie: 11, // 兼容到ie11
   },
   devtool: isAntDesignProPreview ? 'source-map' : false,
+  treeShaking: true,
   // umi routes: https://umijs.org/zh/guide/router.html
   routes: [
     {
@@ -111,13 +113,14 @@ export default {
     },
   ],
   // Theme for antd: https://ant.design/docs/react/customize-theme-cn
-  theme: {
+  theme: { // 配置主题
     'primary-color': primaryColor,
   },
-  define: {
+  define: { // 将设置的值通过webpack的DefinePlugin传递给代码，值会自动做JSON.stringify处理
     ANT_DESIGN_PRO_ONLY_DO_NOT_USE_IN_YOUR_PRODUCTION:
       ANT_DESIGN_PRO_ONLY_DO_NOT_USE_IN_YOUR_PRODUCTION || '', // preview.pro.ant.design only do not use in your production ; preview.pro.ant.design 专用环境变量，请不要在你的项目中使用它。
   },
+  // 忽略moment的locale文件，用于减少尺寸
   ignoreMomentLocale: true,
   lessLoaderOptions: {
     javascriptEnabled: true,
