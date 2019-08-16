@@ -98,15 +98,19 @@ export default {
       authority: ['admin', 'user'],
       routes: [
         {
-          path: '/',
+          path: '/welcome',
           name: 'welcome',
-          icon: 'smile',
+          icon: 'table',
           component: './Welcome',
         },
         {
           component: './404',
         },
       ],
+    },
+    {
+      path: '/login',
+      component: '../layouts/UserLayout'
     },
     {
       component: './404',
