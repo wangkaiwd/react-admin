@@ -19,4 +19,23 @@ const isAntDesignProOrDev = (): boolean => {
   return isAntDesignPro();
 };
 
-export { isAntDesignProOrDev, isAntDesignPro, isUrl };
+interface AnyObject {
+  [key: string]: string
+}
+
+interface ResultObject {
+  [key: string]: string[]
+}
+
+const generateDllPackage = (pkg: AnyObject): ResultObject => {
+  const result: ResultObject = {};
+  Object.keys(pkg).forEach(key => {
+    if (key.includes('-')) {
+      key = key.replace(/-/g, '');
+    }
+    result[key] = [key];
+  });
+  return result;
+};
+
+export { isAntDesignProOrDev, isAntDesignPro, isUrl, generateDllPackage };

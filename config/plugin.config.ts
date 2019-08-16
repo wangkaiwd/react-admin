@@ -2,10 +2,12 @@
 // eslint-disable-next-line eslint-comments/abdeils - enable - pair;
 /* eslint-disable import/no-extraneous-dependencies */
 import ThemeColorReplacer from 'webpack-theme-color-replacer';
+// @ts-ignore
+// import HardSourceWebpackPlugin from 'hard-source-webpack-plugin';
 import generate from '@ant-design/colors/lib/generate';
 import path from 'path';
 
-function getModulePackageName(module: { context: string }) {
+function getModulePackageName (module: { context: string }) {
   if (!module.context) return null;
 
   const nodeModulesPath = path.join(__dirname, '../node_modules/');
@@ -35,7 +37,7 @@ export default (config: any) => {
         fileName: 'css/theme-colors-[contenthash:8].css',
         matchColors: getAntdSerials('#1890ff'), // 主色系列
         // 改变样式选择器，解决样式覆盖问题
-        changeSelector(selector: string): string {
+        changeSelector (selector: string): string {
           switch (selector) {
             case '.ant-calendar-today .ant-calendar-date':
               return ':not(.ant-calendar-selected-date)' + selector;
@@ -51,10 +53,11 @@ export default (config: any) => {
       },
     ]);
   }
+  // config.plugin('hard-source-webpack-plugin').use(HardSourceWebpackPlugin);
 
   // optimize chunks
   config.optimization
-    // share the same chunks across different modules
+  // share the same chunks across different modules
     .runtimeChunk(false)
     .splitChunks({
       chunks: 'async',
@@ -70,7 +73,7 @@ export default (config: any) => {
             }
             return false;
           },
-          name(module: { context: string }) {
+          name (module: { context: string }) {
             const packageName = getModulePackageName(module);
             if (packageName) {
               if (['bizcharts', '@antv_data-set'].indexOf(packageName) >= 0) {
