@@ -5,6 +5,7 @@ const pkg = require('../package.json');
 // https://umijs.org/config/
 import slash from 'slash2';
 import webpackPlugin from './plugin.config';
+import routes from './router.config';
 
 const { pwa, primaryColor } = defaultSettings;
 
@@ -90,32 +91,7 @@ export default {
   devtool: isAntDesignProPreview ? 'source-map' : false,
   treeShaking: true,
   // umi routes: https://umijs.org/zh/guide/router.html
-  routes: [
-    {
-      path: '/',
-      component: '../layouts/BasicLayout',
-      Routes: ['src/pages/Authorized'],
-      authority: ['admin', 'user'],
-      routes: [
-        {
-          path: '/welcome',
-          name: 'welcome',
-          icon: 'table',
-          component: './Welcome',
-        },
-        {
-          component: './404',
-        },
-      ],
-    },
-    {
-      path: '/login',
-      component: '../layouts/UserLayout'
-    },
-    {
-      component: './404',
-    },
-  ],
+  routes,
   // Theme for antd: https://ant.design/docs/react/customize-theme-cn
   theme: { // 配置主题
     'primary-color': primaryColor,
