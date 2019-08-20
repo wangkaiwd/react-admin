@@ -2,14 +2,18 @@ import { IRoute } from 'umi-types';
 
 const routes: IRoute[] = [
   {
+    path: '/login',
+    component: '../layouts/UserLayout'
+  },
+  {
     path: '/',
     component: '../layouts/BasicLayout',
     Routes: ['src/pages/Authorized'],
     authority: ['admin', 'user'],
     routes: [
       {
-        path: '/welcome',
-        name: 'welcome',
+        path: '/',
+        name: '欢迎',
         icon: 'table',
         component: './Welcome',
       },
@@ -17,10 +21,6 @@ const routes: IRoute[] = [
         component: './404',
       },
     ],
-  },
-  {
-    path: '/login',
-    component: '../layouts/UserLayout'
   },
   {
     component: './404',
