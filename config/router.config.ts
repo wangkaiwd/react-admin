@@ -15,7 +15,7 @@ const routes: IRoute[] = [
         path: '/',
         name: '欢迎',
         icon: 'table',
-        component: './Welcome',
+        component: './Welcome/Welcome',
       },
       {
         component: './404',
