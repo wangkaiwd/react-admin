@@ -41,15 +41,17 @@ const UserModel: UserModelType = {
   },
 
   effects: {
-    *fetch(_, { call, put }) {
+    * fetch (_, { call, put }) {
       const response = yield call(queryUsers);
       yield put({
         type: 'save',
         payload: response,
       });
     },
-    *fetchCurrent(_, { call, put }) {
+    * fetchCurrent (_, { call, put }) {
+      // call: 用于调用异步逻辑，支持promise
       const response = yield call(queryCurrent);
+      // put: 用于触发action
       yield put({
         type: 'saveCurrentUser',
         payload: response,
@@ -58,13 +60,13 @@ const UserModel: UserModelType = {
   },
 
   reducers: {
-    saveCurrentUser(state, action) {
+    saveCurrentUser (state, action) {
       return {
         ...state,
         currentUser: action.payload || {},
       };
     },
-    changeNotifyCount(
+    changeNotifyCount (
       state = {
         currentUser: {},
       },

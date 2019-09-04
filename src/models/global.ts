@@ -41,12 +41,13 @@ const GlobalModel: GlobalModelType = {
   },
 
   effects: {
-    *fetchNotices(_, { call, put, select }) {
+    * fetchNotices (_, { call, put, select }) {
       const data = yield call(queryNotices);
       yield put({
         type: 'saveNotices',
         payload: data,
       });
+      // 用于从state中获取数据
       const unreadCount: number = yield select(
         state => state.global.notices.filter(item => !item.read).length,
       );
@@ -58,7 +59,7 @@ const GlobalModel: GlobalModelType = {
         },
       });
     },
-    *clearNotices({ payload }, { put, select }) {
+    * clearNotices ({ payload }, { put, select }) {
       yield put({
         type: 'saveClearedNotices',
         payload,
@@ -75,7 +76,7 @@ const GlobalModel: GlobalModelType = {
         },
       });
     },
-    *changeNoticeReadState({ payload }, { put, select }) {
+    * changeNoticeReadState ({ payload }, { put, select }) {
       const notices: NoticeItem[] = yield select(state =>
         state.global.notices.map(item => {
           const notice = { ...item };
@@ -102,20 +103,20 @@ const GlobalModel: GlobalModelType = {
   },
 
   reducers: {
-    changeLayoutCollapsed(state = { notices: [], collapsed: true }, { payload }): GlobalModelState {
+    changeLayoutCollapsed (state = { notices: [], collapsed: true }, { payload }): GlobalModelState {
       return {
         ...state,
         collapsed: payload,
       };
     },
-    saveNotices(state, { payload }): GlobalModelState {
+    saveNotices (state, { payload }): GlobalModelState {
       return {
         collapsed: false,
         ...state,
         notices: payload,
       };
     },
-    saveClearedNotices(state = { notices: [], collapsed: true }, { payload }): GlobalModelState {
+    saveClearedNotices (state = { notices: [], collapsed: true }, { payload }): GlobalModelState {
       return {
         collapsed: false,
         ...state,
@@ -125,7 +126,7 @@ const GlobalModel: GlobalModelType = {
   },
 
   subscriptions: {
-    setup({ history }): void {
+    setup ({ history }): void {
       // Subscribe history(url) change, trigger `load` action if pathname is `/`
       history.listen(({ pathname, search }): void => {
         if (typeof window.ga !== 'undefined') {
