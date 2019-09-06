@@ -7,7 +7,7 @@ import ProLayout, {
   MenuDataItem,
   BasicLayoutProps as ProLayoutProps,
   Settings,
-  DefaultFooter
+  DefaultFooter, PageHeaderWrapper
 } from '@ant-design/pro-layout';
 import React, { useEffect } from 'react';
 import Link from 'umi/link';
@@ -16,6 +16,7 @@ import Authorized from '@/utils/Authorized';
 import { ConnectState, Dispatch } from '@/models/connect';
 import { isAntDesignPro } from '@/utils/utils';
 import logo from '../assets/logo.svg';
+import { Card } from 'antd';
 
 export interface BasicLayoutProps extends ProLayoutProps {
   breadcrumbNameMap: {
@@ -125,7 +126,11 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
       {...props}
       {...settings}
     >
-      {children}
+      <PageHeaderWrapper>
+        <Card bordered={false}>
+          {children}
+        </Card>
+      </PageHeaderWrapper>
     </ProLayout>
   );
 };
