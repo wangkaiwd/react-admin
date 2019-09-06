@@ -13,7 +13,6 @@ import React, { useEffect } from 'react';
 import Link from 'umi/link';
 import { connect } from 'dva';
 import Authorized from '@/utils/Authorized';
-// import RightContent from '@/components/GlobalHeader/RightContent';
 import { ConnectState, Dispatch } from '@/models/connect';
 import { isAntDesignPro } from '@/utils/utils';
 import logo from '../assets/logo.svg';
@@ -34,7 +33,6 @@ export type BasicLayoutContext = { [K in 'location']: BasicLayoutProps[K] } & {
 /**
  * use Authorized check all menu item
  */
-
 const menuDataRender = (menuList: MenuDataItem[]): MenuDataItem[] =>
   menuList.map(item => {
     const localItem = { ...item, children: item.children ? menuDataRender(item.children) : [] };
@@ -95,7 +93,6 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
       type: 'global/changeLayoutCollapsed',
       payload,
     });
-  console.log('props', props);
   return (
     <ProLayout
       logo={logo}

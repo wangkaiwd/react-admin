@@ -7,7 +7,8 @@ type CurrentAuthorityType = string | string[] | (() => typeof CURRENT);
  * use  authority or getAuthority
  * @param {string|()=>String} currentAuthority
  */
-const renderAuthorize = <T>(Authorized: T): ((currentAuthority: CurrentAuthorityType) => T) => (
+
+const renderAuthorize = <T> (Authorized: T): ((currentAuthority: CurrentAuthorityType) => T) => (
   currentAuthority: CurrentAuthorityType,
 ): T => {
   if (currentAuthority) {
@@ -27,4 +28,4 @@ const renderAuthorize = <T>(Authorized: T): ((currentAuthority: CurrentAuthority
 };
 
 export { CURRENT };
-export default <T>(Authorized: T) => renderAuthorize<T>(Authorized);
+export default <T> (Authorized: T) => renderAuthorize<T>(Authorized);

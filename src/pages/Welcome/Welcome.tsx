@@ -1,10 +1,11 @@
 import React from 'react';
-import { PageHeaderWrapper } from '@ant-design/pro-layout';
 
-export default (): React.ReactNode => (
-  <PageHeaderWrapper>
+const Welcome: React.FunctionComponent = (props) => {
+  return (
     <div>
       欢迎页面
     </div>
-  </PageHeaderWrapper>
-);
+  );
+};
+
+export default Welcome;

@@ -13,6 +13,8 @@ const getRouteAuthority = (path: string, routeData: Route[]) => {
   let authorities: string[] | string | undefined;
   routeData.forEach(route => {
     // match prefix
+    // example: https://github.com/pillarjs/path-to-regexp#unnamed-parameters
+    // route.path: '/welcome/:params', path: '/welcome/first'
     if (pathToRegexp(`${route.path}(.*)`).test(path)) {
       // exact match
       if (route.path === path) {
@@ -43,7 +45,7 @@ const AuthComponent: React.FC<AuthComponentProps> = ({
   return (
     <Authorized
       authority={getRouteAuthority(location.pathname, routes) || ''}
-      noMatch={isLogin ? <Redirect to="/exception/403" /> : <Redirect to="/user/login" />}
+      noMatch={isLogin ? <Redirect to="/exception/403"/> : <Redirect to="/user/login"/>}
     >
       {children}
     </Authorized>
